@@ -4,8 +4,6 @@ Update setup.py to the new version
 
 delete dist folder
 
-How to specify endid org?
-
 `python setup.py sdist bdist_wheel`
 
 `twine upload dist/*`
