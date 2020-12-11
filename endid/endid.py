@@ -1,5 +1,10 @@
 #!python
 
+try:
+    FileNotFoundError
+except NameError:
+    FileNotFoundError = EnvironmentError # Python 2
+
 import os
 prefs_filepath = os.path.expanduser("~/.endid")
 
