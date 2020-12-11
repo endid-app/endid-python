@@ -29,6 +29,6 @@ python -m endid.cmd -t 7c710a188f874520be1f7ab7815c6cd5
 ### From Python code
 
 ```
-from endid import call
-call(token='7c710a188f874520be1f7ab7815c6cd5')
+import endid
+endid.call(token='7c710a188f874520be1f7ab7815c6cd5')
 ```

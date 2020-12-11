@@ -1,7 +1,7 @@
 #!python
 
 try:
-    FileNotFoundError
+    FileNotFoundError # Python 3
 except NameError:
     FileNotFoundError = EnvironmentError # Python 2
 
