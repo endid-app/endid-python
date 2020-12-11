@@ -28,8 +28,9 @@ def call(token='', message='', hostname='endid.app', path='/api'):
     data = response.read()
     
     print(data)
+    return data
 
-def cmd():
+def cli():
 
     import argparse
 
@@ -48,4 +49,4 @@ def cmd():
     call(token=results.token, message=results.message)
 
 if __name__ == "__main__":
-    cmd()
+    cli()

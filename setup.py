@@ -15,7 +15,7 @@ setuptools.setup(
     version="0.0.1",
     author="Dan Lester",
     author_email="support@endid.app",
-    description="Web launchpad to browse a folder containing multiple Streamlit applications",
+    description="Command line utility to call the Endid.app Slack app",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/endid-app/endid-python",
@@ -23,7 +23,7 @@ setuptools.setup(
     install_requires=[],
     include_package_data=True,
     zip_safe=False,
-    entry_points={"console_scripts": ["endid = endid.endid:cmd"]},
+    entry_points={"console_scripts": ["endid = endid.endid:cli"]},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
