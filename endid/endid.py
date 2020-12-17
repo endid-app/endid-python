@@ -32,7 +32,7 @@ def write_prefs(prefs):
     except FileNotFoundError as e:
         print('Unable to write prefs to file '+prefs_filepath+': '+str(e))
 
-def call(token='', message='', hostname='endid.app', path='/api', writeprefs=True, readprefs=True):
+def call(token='', message='', hostname='api.endid.app', path='/', writeprefs=True, readprefs=True):
     try:
         import http.client as httplib # Python 3
     except:
