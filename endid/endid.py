@@ -32,10 +32,9 @@ def write_prefs(prefs):
     except FileNotFoundError as e:
         print('Unable to write prefs to file '+prefs_filepath+': '+str(e))
 
-def call(token='', message='', hostname='', path='/', writeprefs=True, readprefs=True):
+def call(token='', message='', writeprefs=True, readprefs=True, printoutput=False):
 
-    if hostname == '':
-        hostname = os.environ.get('ENDID_API_HOSTNAME', 'api.endid.app')
+    hostname = os.environ.get('ENDID_API_HOSTNAME', 'api.endid.app')
 
     try:
         import http.client as httplib # Python 3
@@ -49,8 +48,12 @@ def call(token='', message='', hostname='', path='/', writeprefs=True, readprefs
     if token == '':
         token = prefs.get('token', '')
         if token == '':
-            print('Please provide a token')
+            if printoutput:
+                print('Please provide a token')
             return 'Please provide a token'
+        elif printoutput:
+            print('Using token '+token)
+            
 
     if message == '' and token == prefs.get('token', ''):
         message = prefs.get('message', '')
@@ -70,14 +73,15 @@ def call(token='', message='', hostname='', path='/', writeprefs=True, readprefs
 
     body = urlencode(params)
 
-    conn.request('POST', path, body, {"content-type": "application/x-www-form-urlencoded"})
+    conn.request('POST', '/', body, {"content-type": "application/x-www-form-urlencoded"})
     response = conn.getresponse()
     data = response.read()
 
     if writeprefs:
         write_prefs(params)
     
-    print(data)
+    if printoutput:
+        print('Response: '+data.decode("utf-8"))
     return data
 
 def cli():
@@ -105,7 +109,7 @@ def cli():
 
     results = parser.parse_args()
 
-    call(token=results.token, message=results.message, writeprefs=results.writeprefs, readprefs=results.readprefs)
+    call(token=results.token, message=results.message, writeprefs=results.writeprefs, readprefs=results.readprefs, printoutput=True)
 
 if __name__ == "__main__":
     cli()
