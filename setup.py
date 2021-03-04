@@ -4,15 +4,9 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-# read requirements.txt
-#with open('requirements.txt', 'r') as f:
-#    content = f.read()
-#li_req = content.split('\n')
-#install_requires = [e.strip() for e in li_req if len(e)]
-
 setuptools.setup(
     name="endid",
-    version="0.0.5",
+    version="0.0.6",
     author="Dan Lester",
     author_email="support@endid.app",
     description="Command line utility to call the Endid.app Slack app",

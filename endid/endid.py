@@ -77,11 +77,17 @@ def call(token='', message='', writeprefs=True, readprefs=True, printoutput=Fals
     response = conn.getresponse()
     data = response.read()
 
+    data = data.decode("utf-8")
+
     if writeprefs:
         write_prefs(params)
     
     if printoutput:
-        print('Response: '+data.decode("utf-8"))
+        print('Response: '+data)
+
+    if data[:5] == 'Sorry':
+        raise Exception('Endid returned an error: '+data)
+
     return data
 
 def cli():

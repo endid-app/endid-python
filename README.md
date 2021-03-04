@@ -16,6 +16,8 @@ To install both Python and Command-line clients:
 pip install endid
 ```
 
+Endid will install no other dependencies at all.
+
 ## Usage
 
 Both clients store last-used tokens and messages on your system, so subsequently calling the bare-bones client with no token will still reach Slack.
