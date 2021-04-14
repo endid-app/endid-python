@@ -2,11 +2,13 @@
 
 Command-line utility and Python client for calling the [Endid Slack app](https://endid.app/) to announce that a task has ended!
 
-Endid.app is a simple informal Slack integration for developers and data scientists.
+Endid.app is a simpler more flexible webhook - an informal Slack integration for developers and data scientists.
 
 Find yourself constantly checking terminals, notebooks, or web apps waiting to see if your dev tasks have finished?
 
 Endid supplies a single token for any Slack channel. You can use Endid's simple API or command-line utility to let you know when any process has completed.
+
+You can mute notifications temporarily right within Slack.
 
 ## Installation
 
@@ -74,6 +76,13 @@ Extra arguments:
 
 The call function returns an `OK` response from the API if everything goes to plan, and error messages if not.
 
+
+### GitHub Actions
+
+We have a ready-made [GitHub Action](https://github.com/marketplace/actions/endid-action) to easily send a Slack message via Endid.
+
+The great thing is being able to mute notifications right from the Slack channel if they get a bit much, or 
+to avoid disturbing colleagues while you develop your workflows.
 
 ## Installation Troubleshooting
 
