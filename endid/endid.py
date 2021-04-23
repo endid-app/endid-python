@@ -46,7 +46,7 @@ def write_prefs(prefs):
     except FileNotFoundError as e:
         print('Unable to write prefs to file '+prefs_filepath+': '+str(e))
 
-def call(token='', message='', writeprefs=True, readprefs=True, printoutput=False):
+def call(token='', message='', status='', writeprefs=True, readprefs=True, printoutput=False):
 
     hostname = os.environ.get('ENDID_API_HOSTNAME', 'api.endid.app')
 
@@ -85,6 +85,9 @@ def call(token='', message='', writeprefs=True, readprefs=True, printoutput=Fals
     if message != '':
         params['message'] = message
 
+    if status != '':
+        params['status'] = status
+
     body = urlencode(params)
 
     conn.request('POST', '/', body, {"content-type": "application/x-www-form-urlencoded"})
@@ -112,11 +115,15 @@ def cli():
 
     parser.add_argument('-t', action='store', default='',
                     dest='token',
-                    help='Endid token from the Slack channel to call')
+                    help='Endid token from the Slack channel to call (optional if saved in prefs file already)')
 
     parser.add_argument('-m', action='store', default='',
                     dest='message',
                     help='Message to display (optional)')
+
+    parser.add_argument('-s', action='store', default='',
+                    dest='status',
+                    help='Status of your event OK | WARN | FAIL (optional)')
 
     parser.add_argument('-w', action='store_false',
                     dest='writeprefs',
@@ -129,7 +136,7 @@ def cli():
 
     results = parser.parse_args()
 
-    call(token=results.token, message=results.message, writeprefs=results.writeprefs, readprefs=results.readprefs, printoutput=True)
+    call(token=results.token, message=results.message, status=results.status, writeprefs=results.writeprefs, readprefs=results.readprefs, printoutput=True)
 
 if __name__ == "__main__":
     cli()
