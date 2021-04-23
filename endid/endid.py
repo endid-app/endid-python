@@ -1,9 +1,26 @@
 #!python
 
+PYVER = 3
+escape_str = None
+unescape_str = None
+
 try:
     FileNotFoundError # Python 3
+    def escape_str_py3(s):
+        return s.encode('unicode_escape').decode("utf-8")
+    def unescape_str_py3(s):
+        return s.encode("utf-8").decode('unicode_escape')
+    escape_str = escape_str_py3
+    unescape_str = unescape_str_py3
 except NameError:
     FileNotFoundError = EnvironmentError # Python 2
+    def escape_str_py2(s):
+        return s.encode('string_escape')
+    def unescape_str_py2(s):
+        return s.decode('string_escape')
+    escape_str = escape_str_py2
+    unescape_str = unescape_str_py2
+    PYVER = 2
 
 import os
 prefs_filepath = os.path.expanduser("~/.endid")
@@ -13,13 +30,10 @@ def read_prefs():
     prefs = {}
     try:
         with open(prefs_filepath, 'rt') as f:
-            for l in f.readlines():
-                if l.strip() != '':
-                    r = re.match('^\s*([a-z]+)\s*\:\s*(.*?)\s*$', l)
-                    if r:
-                        prefs[r.group(1)] = r.group(2)
-                    else:
-                        print('Invalid prefs file '+prefs_filepath+' line: '+l)
+            contents = f.read()
+            for m in re.finditer('^\s*(token|message)\s*\:\s*(.*?)\s*$', contents, re.MULTILINE):
+                prefs[m.group(1)] = unescape_str(m.group(2))
+                
     except FileNotFoundError:
         pass
 
@@ -28,7 +42,7 @@ def read_prefs():
 def write_prefs(prefs):
     try:
         with open(prefs_filepath, 'wt') as f:
-            f.writelines(["".join([k,': ',v,"\n"]) for k,v in prefs.items()])
+            f.writelines(["".join([k,': ',escape_str(v),"\n"]) for k,v in prefs.items()])
     except FileNotFoundError as e:
         print('Unable to write prefs to file '+prefs_filepath+': '+str(e))
 
