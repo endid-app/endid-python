@@ -68,6 +68,10 @@ Extra arguments:
 
 `message` - a custom message to display in the Slack channel.
 
+`status` - a status for the event OK | WARN | FAIL | NONE.
+
+`name` - any string to act as an identifier for the event source.
+
 `writeprefs` - whether to write token/message to the preferences file so they can become defaults next time (default=True)
 
 `readprefs` - whether to read token/message from the preferences file (default=True)

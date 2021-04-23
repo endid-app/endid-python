@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="endid",
-    version="0.0.6",
+    version="0.0.7",
     author="Dan Lester",
     author_email="support@endid.app",
     description="Command line utility to call the Endid.app Slack app",
