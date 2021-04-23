@@ -46,7 +46,7 @@ def write_prefs(prefs):
     except FileNotFoundError as e:
         print('Unable to write prefs to file '+prefs_filepath+': '+str(e))
 
-def call(token='', message='', status='', writeprefs=True, readprefs=True, printoutput=False):
+def call(token='', message='', name='', status='', writeprefs=True, readprefs=True, printoutput=False):
 
     hostname = os.environ.get('ENDID_API_HOSTNAME', 'api.endid.app')
 
@@ -72,6 +72,8 @@ def call(token='', message='', status='', writeprefs=True, readprefs=True, print
     if message == '' and token == prefs.get('token', ''):
         message = prefs.get('message', '')
 
+    if name == '' and token == prefs.get('token', ''):
+        name = prefs.get('name', '')
 
     conn = httplib.HTTPSConnection(hostname)
 
@@ -87,6 +89,9 @@ def call(token='', message='', status='', writeprefs=True, readprefs=True, print
 
     if status != '':
         params['status'] = status
+
+    if name != '':
+        params['name'] = name
 
     body = urlencode(params)
 
@@ -121,6 +126,10 @@ def cli():
                     dest='message',
                     help='Message to display (optional)')
 
+    parser.add_argument('-n', action='store', default='',
+                    dest='name',
+                    help='Name to identify the event source (optional)')
+
     parser.add_argument('-s', action='store', default='',
                     dest='status',
                     help='Status of your event OK | WARN | FAIL (optional)')
@@ -136,7 +145,7 @@ def cli():
 
     results = parser.parse_args()
 
-    call(token=results.token, message=results.message, status=results.status, writeprefs=results.writeprefs, readprefs=results.readprefs, printoutput=True)
+    call(token=results.token, message=results.message, name=results.name, status=results.status, writeprefs=results.writeprefs, readprefs=results.readprefs, printoutput=True)
 
 if __name__ == "__main__":
     cli()
